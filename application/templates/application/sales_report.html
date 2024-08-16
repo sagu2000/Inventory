@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Report - {{ period|title }}</title>
+</head>
+<body>
+    <h1>Sales Report for {{ period|title }}</h1>
+    <p>From: {{ start_date }} To: {{ end_date }}</p>
+    <table border="1">
+        <tr>
+            <th>Product Name</th>
+            <th>Total Sales Quantity</th>
+        </tr>
+        {% for item in sales_movements %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>Total Quantity Sold: {{ total_sales.total_quantity }}</p>
+    <a href="{% url 'product_list' %}">Back to Product List</a>
+</body>
+</html>

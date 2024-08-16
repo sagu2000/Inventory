@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Movement Report</title>
+</head>
+<body>
+    <h1>Product Movement Report (Last 30 Days)</h1>
+    <table border="1">
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Type</th>
+            <th>Date</th>
+        </tr>
+        {% for movement in movements %}
+        <tr>
+            <td>{{ movement.product.name }}</td>
+            <td>{{ movement.quantity }}</td>
+            <td>{{ movement.get_transaction_type_display }}</td>
+            <td>{{ movement.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'product_list' %}">Back to Product List</a>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+</head>
+<body>
+    <h1>Product List</h1>
+    <a href="{% url 'product_create' %}">Add New Product</a>
+    <table border="1">
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Stock History</th>
+            <th>Actions</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.sku }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+            <td><a href="{% url 'stock_history' product.id %}">View History</a></td>
+            <td>
+                <form action="{% url 'restock_product' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="number" name="amount" min="1" placeholder="Amount" required>
+                    <button type="submit">Restock</button>
+                </form>
+                <form action="{% url 'sell_product' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="number" name="amount" min="1" placeholder="Amount" required>
+                    <button type="submit">Sell</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'current_stock_report' %}">Current Stock Report</a>
+    <a href="{% url 'product_movement_report' %}">Product movement Report</a>
+</body>
+</html>
